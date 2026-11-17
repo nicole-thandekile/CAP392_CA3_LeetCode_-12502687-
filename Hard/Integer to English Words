@@ -1,0 +1,66 @@
+//LC273_Integer to English words
+class Solution {
+     String[] below20 = {
+        "", "One", "Two", "Three", "Four",
+        "Five", "Six", "Seven", "Eight", "Nine",
+        "Ten", "Eleven", "Twelve", "Thirteen",
+        "Fourteen", "Fifteen", "Sixteen",
+        "Seventeen", "Eighteen", "Nineteen"
+    };
+
+    String[] tens = {
+        "", "", "Twenty", "Thirty", "Forty",
+        "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+    };
+
+    String[] thousands = {
+        "", "Thousand", "Million", "Billion"
+    };
+
+    public String numberToWords(int num) {
+
+        if (num == 0) {
+            return "Zero";
+        }
+
+        StringBuilder result = new StringBuilder();
+        int group = 0;
+
+        while (num > 0) {
+
+            int part = num % 1000;
+
+            if (part != 0) {
+                String words = convert(part);
+
+                result.insert(0, words + " " + thousands[group] + " ");
+                    }
+
+            num = num / 1000;
+            group++;
+        }
+
+        return result.toString().trim().replaceAll("\\s+", " ");
+    }
+
+    String convert(int num) {
+
+        if (num == 0) {
+            return "";
+        }
+
+        if (num < 20) {
+            return below20[num];
+        }
+
+        if (num < 100) {
+            return tens[num / 10] + " " + convert(num % 10);
+        }
+
+        return below20[num / 100] + " Hundred " + convert(num % 100);
+    }
+
+      
+
+
+}
